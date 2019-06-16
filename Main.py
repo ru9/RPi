@@ -1,15 +1,14 @@
-import RPi.GPIO as GPIO
+import _thread
 import time
+from sensors import *
+import httpserver
 
-GPIO.setmode(GPIO.BCM)
+print('Initiating temp and humidity sensor')
+_thread.start_new_thread(temphumid.run_dht, tuple())
+print('Temp and humidity sensor started')
 
-GPIO.setup(18, GPIO.OUT)
-GPIO.output(18. GPIO.HIGH)
+time.sleep(6)
 
-time.sleep(3)
-
-GPIO.output(18, GPIO.LOW)
-GPIO.cleanup()
-
-print('No')
+print('Initiating Server')
+httpserver.run_server()
 
